@@ -85,7 +85,8 @@ namespace ChessBoard
             }
             return false;
         }
-
+        
+        // test not working method
         public static void VerticlLeftAxis(List<List<int>> queenGround, int v, int h, int side)
         {
             for (int queen = 0; queen < queenGround.Count; queen++)
