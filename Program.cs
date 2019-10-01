@@ -86,29 +86,6 @@ namespace ChessBoard
             return false;
         }
         
-        // test not working method
-        public static void VerticlLeftAxis(List<List<int>> queenGround, int v, int h, int side)
-        {
-            for (int queen = 0; queen < queenGround.Count; queen++)
-            {
-                if (queenGround[queen][0] == v)
-                {
-                    for (int i = side-1; i >= 0; i--)
-                    {
-                        v = i;
-                    }
-                }
-
-                if (queenGround[queen][1] == h)
-                {
-                    for (int i = side - 1; i >= 0; i--)
-                    {
-                        h = i;
-                    }
-                }
-            }
-        }
-
         public static void BoardLayout(char[,] box, List<List<int>> queenGround)
         {
             int side = (int)Math.Sqrt(box.Length);
@@ -117,7 +94,7 @@ namespace ChessBoard
             {
                 for (int x = 0; x < side; x++)
                 {
-                    box[y, x] = '?';
+                    //box[y, x] = 'W';
 
                     if (QueenMovementRuleSet(queenGround, y, x))
                         box[y, x] = 'X';
@@ -128,6 +105,106 @@ namespace ChessBoard
                     Console.Write("{0} ", box[y, x]);
                 }
                 Console.WriteLine();
+            }
+        }
+
+        public static void DiagonalSW(List<List<int>> queenGround, int side, char[,] box)
+        {
+            for (int queen = 0; queen < queenGround.Count; queen++)
+            {
+                int y = queenGround[queen][0];
+                int x = queenGround[queen][1];
+
+                for (int i = 0; i < side; i++)
+                {
+                    y += 1;
+                    x -= 1;
+
+                    if (y < 0)
+                        break;
+                    if (x < 0)
+                        break;
+                    if (y >= side)
+                        break;
+                    if (x >= side)
+                        break;
+
+                    box[y, x] = 'X';
+                }
+            }
+        }
+        public static void DiagonalSE(List<List<int>> queenGround, int side, char[,] box)
+        {
+            for (int queen = 0; queen < queenGround.Count; queen++)
+            {
+                int y = queenGround[queen][0];
+                int x = queenGround[queen][1];
+
+                for (int i = 0; i < side; i++)
+                {
+                    y += 1;
+                    x += 1;
+
+                    if (y < 0)
+                        break;
+                    if (x < 0)
+                        break;
+                    if (y >= side)
+                        break;
+                    if (x >= side)
+                        break;
+
+                    box[y, x] = 'X';
+                }
+            }
+        }
+        public static void DiagonalNW(List<List<int>> queenGround, int side, char[,] box)
+        {
+            for (int queen = 0; queen < queenGround.Count; queen++)
+            {
+                int y = queenGround[queen][0];
+                int x = queenGround[queen][1];
+
+                for (int i = 0; i < side; i++)
+                {
+                    y -= 1;
+                    x -= 1;
+
+                    if (y < 0)
+                        break;
+                    if (x < 0)
+                        break;
+                    if (y >= side)
+                        break;
+                    if (x >= side)
+                        break;
+
+                    box[y, x] = 'X';
+                }
+            }
+        }
+        public static void DiagonalNE(List<List<int>> queenGround, int side, char[,] box)
+        {
+            for (int queen = 0; queen < queenGround.Count; queen++)
+            {
+                int y = queenGround[queen][0];
+                int x = queenGround[queen][1];
+                for (int i = 0; i < side; i++)
+                {
+                    y -= 1;
+                    x += 1;
+
+                    if (y < 0)
+                        break;
+                    if (x < 0)
+                        break;
+                    if (y >= side)
+                        break;
+                    if (x >= side)
+                        break;
+
+                    box[y, x] = 'X';
+                }
             }
         }
 
@@ -152,6 +229,10 @@ namespace ChessBoard
             char[,] boxes = new char[size, size];
 
             QueenPosition(queenLocations, singleQueen);
+            DiagonalSW(singleQueen, size, boxes);
+            DiagonalSE(singleQueen, size, boxes);
+            DiagonalNW(singleQueen, size, boxes);
+            DiagonalNE(singleQueen, size, boxes);
             BoardLayout(boxes, singleQueen);
 
             Console.ReadKey();
